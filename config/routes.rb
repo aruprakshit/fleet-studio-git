@@ -7,4 +7,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  scope '/repositories/:owner/:repository' do
+    #http://127.0.0.1:3000/repositories/aruprakshit/curly-palm-tree/commits/c9ffbe71594f7fa/diff
+    get '/commits/:oid/diff',  controller: 'repositories/commits', action: 'diff'
+    
+    ## http://127.0.0.1:3000/repositories/aruprakshit/curly-palm-tree/commits/c9ffbe71594f7fa/
+    get '/commits/:oid', controller: 'repositories/commits', action: 'show'
+
+  end
 end

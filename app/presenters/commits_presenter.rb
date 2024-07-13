@@ -28,20 +28,20 @@ class CommitsPresenter
   private
 
   def self.pretty_print_content(content)
-    template = {header: '', lines: [], header_meta: {}}
+    template = -> { {header: '', lines: [], header_meta: {}} }
     result = []
     data = nil
 
     content.each do |string|
       if string.starts_with?('@@')
         if data.nil?
-          data = template.clone
+          data = template.call
           data[:header] = string
           data[:header_meta] = extract_hunk_header(string)
         else
           data.delete(:header_meta)
           result.push(data)
-          data = template.clone
+          data = template.call
           data[:header] = string
           data[:header_meta] = extract_hunk_header(string)
         end

@@ -9,6 +9,21 @@ class CommitsPresenter
     }
   end
 
+  def self.diff(response)
+    response.files.map do |hsh|
+      {
+        "changeKind": hsh[:status],
+        "headFile": {
+          path: hsh[:filename]
+        },
+        "baseFile": {
+          path: hsh[:filename]
+        },
+        "hunks": hsh[:patch].split("\n")
+      }
+    end
+  end
+
   private
 
   def self.user_details(data)

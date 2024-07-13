@@ -10,9 +10,16 @@ module Repositories
                     sha: params[:oid])
       render json: CommitsPresenter.show(response), status: :ok
     end
-  
+
     def diff
-      render json: {commit: "diff"}, status: :ok
+      response = GithubRestApi
+                  .new
+                  .get_commit_diff(
+                    owner: params[:owner],
+                    repository: params[:repository],
+                    sha: params[:oid])
+      #puts response[:files].inspect
+      render json: CommitsPresenter.diff(response), status: :ok
     end
   end
 end

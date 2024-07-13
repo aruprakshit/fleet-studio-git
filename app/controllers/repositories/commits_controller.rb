@@ -19,6 +19,7 @@ module Repositories
                     repository: params[:repository],
                     sha: params[:oid])
       #puts response[:files].inspect
+      #render json: response, status: :ok
       render json: CommitsPresenter.diff(response), status: :ok
     end
   end

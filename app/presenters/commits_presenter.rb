@@ -10,7 +10,15 @@ class CommitsPresenter
   end
 
   def self.diff(response)
-    GitDiffPresenter.new(response[:diff_url]).process
+    diffs = GitDiffPresenter.new(response[:diff_url]).process
+    response[:files].each_with_index do |file, idx|
+      headers = file[:patch].split("\n").select {|string| string.starts_with?('@@') }
+      headers.each_with_index do |header, header_idx|
+        diffs[idx][:hunks][header_idx][:header] = header
+      end
+    end
+
+    diffs
   end
 
   private

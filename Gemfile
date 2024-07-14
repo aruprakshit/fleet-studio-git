@@ -46,4 +46,5 @@ group :development do
 end
 
 # application specific
-gem "octokit"
+gem 'octokit'
+gem 'github_diff_parser'
